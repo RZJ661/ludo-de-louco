@@ -646,7 +646,7 @@ info.textContent = `Vez de ${nomes[jogadorAtual]}.`;
 
 // ==================== LOBBY ONLINE ====================
 
-const socket = io();
+const socket = io("https://ludo-de-louco.onrender.com");
 
 const lobby = document.getElementById("lobby");
 const nickInput = document.getElementById("nick-input");
