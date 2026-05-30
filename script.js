@@ -789,8 +789,8 @@ socket.on("estadoJogo", (estado) => {
     if (estado.infoTexto) info.textContent = estado.infoTexto;
     if (estado.dadoTexto) dadoVisual.textContent = estado.dadoTexto;
 
-    renderizarTodasPecas();
-    atualizarPainel();
+renderizarTodasPecas();
+atualizarPainel();
 });
 
 function renderizarTodasPecas() {
@@ -799,4 +799,5 @@ function renderizarTodasPecas() {
             renderizarPeca(jogador, peca);
         }
     }
+}    }
 }
