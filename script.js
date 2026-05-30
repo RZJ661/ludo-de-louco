@@ -358,11 +358,12 @@ async function usarDadoNaPeca(jogador, pecaIndex, dadoIndex) {
     dadosPendentes.splice(dadoIndex, 1);
     atualizarPainel();
 
-    if (progresso[jogador][pecaIndex] === -1) {
-        tirarDaBase(jogador, pecaIndex);
-        terminarJogada(false);
-        return;
-    }
+   if (progresso[jogador][pecaIndex] === -1) {
+    tirarDaBase(jogador, pecaIndex);
+    terminarJogada(false);
+    enviarEstadoOnline();
+    return;
+}
 
     await moverPeca(jogador, pecaIndex, dadoUsado);
 
@@ -420,6 +421,11 @@ function tirarDaBase(jogador, pecaIndex) {
 }
 
 async function moverPeca(jogador, pecaIndex, passos) {
+    if (jogoOnline && jogador !== minhaCor) {
+        renderizarPeca(jogador, pecaIndex);
+        return;
+    }
+
     animando = true;
 
     for (let i = 0; i < passos; i++) {
@@ -537,20 +543,19 @@ function terminarJogada(ganhouGiro) {
         if (jogadas.length > 0) {
             atualizarPainel();
             info.textContent += ` Dados restantes.`;
-            iniciarTimerAFK();
-            return;
-        }
+           iniciarTimerAFK();
+enviarEstadoOnline();
+return;
     }
 
     if (bonusGiros > 0) {
-        atualizarPainel();
-        info.textContent += " Gire o dado.";
-        return;
-    }
-
-    limparTurno();
-    passarTurno();
+    atualizarPainel();
+    info.textContent += " Gire o dado.";
+    enviarEstadoOnline();
+    return;
 }
+
+passarTurno();
 
 function limparTurno() {
     dadosPendentes = [];
